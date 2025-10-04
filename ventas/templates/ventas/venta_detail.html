@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Venta #{{ venta.id }}</title>
+</head>
+<body>
+    <h1>Venta #{{ venta.id }}</h1>
+    <p><strong>Fecha:</strong> {{ venta.fecha }}</p>
+    <p><strong>Cliente:</strong> {{ venta.cliente.nombre if venta.cliente else "Sin cliente" }}</p>
+    <p><strong>Vendedor:</strong> {{ venta.vendedor.username if venta.vendedor else "N/A" }}</p>
+
+    <h3>Detalles</h3>
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in detalles %}
+            <tr>
+                <td>{{ d.producto.nombre }}</td>
+                <td>{{ d.cantidad }}</td>
+                <td>{{ d.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><strong>Total:</strong> {{ total }}</p>
+
+    <p>
+        <a href="{% url 'factura_pdf' venta.id %}" target="_blank">📄 Descargar factura (PDF)</a>
+        &nbsp;|&nbsp;
+        <a href="{% url 'ventas_list' %}">Volver a Ventas</a>
+    </p>
+</body>
+</html>

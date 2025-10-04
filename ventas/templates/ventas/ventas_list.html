@@ -1,0 +1,10 @@
+<td>
+  {% if venta.cliente_obj %}
+    {{ venta.cliente_obj.nombre }}
+    {% if venta.cliente_obj.ruc %}
+      ({{ venta.cliente_obj.ruc }})
+    {% endif %}
+  {% else %}
+    {{ venta.cliente }}
+  {% endif %}
+</td>

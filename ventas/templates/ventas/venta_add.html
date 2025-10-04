@@ -1,0 +1,72 @@
+<h1>Registrar Venta</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Selección de Cliente -->
+    <label>Cliente:</label>
+    <select name="cliente" required>
+        <option value="">-- Selecciona un cliente --</option>
+        {% for c in clientes %}
+            <option value="{{ c.id }}">{{ c.nombre }} ({{ c.ruc }})</option>
+        {% endfor %}
+    </select><br><br>
+
+    <!-- Vendedor -->
+    <label>Vendedor:</label>
+    <input type="text" name="vendedor" value="{{ request.user.username }}" readonly><br><br>
+
+    <!-- Detalle de venta -->
+    <h3>Detalle de Ventas</h3>
+    <table border="1" cellpadding="5" cellspacing="0" id="tabla-ventas">
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+        </tr>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td><input type="number" name="cantidad_{{ producto.id }}" value="0" min="0"></td>
+            <td>{{ producto.precio }}</td>
+            <td class="subtotal">{{ producto.precio|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3" style="text-align:right;"><strong>Total General:</strong></td>
+            <td id="total-general">0.00</td>
+        </tr>
+    </table>
+
+    <br>
+    <button type="submit">Registrar Venta</button>
+</form>
+
+<script>
+function actualizarTotal() {
+    const rows = document.querySelectorAll('#tabla-ventas tr');
+    let totalGeneral = 0;
+
+    rows.forEach((row, index) => {
+        const cantidadInput = row.querySelector('input[type="number"]');
+        if (cantidadInput) {
+            const precio = parseFloat(row.cells[2].innerText);
+            const subtotalCell = row.cells[3];
+            const subtotal = precio * cantidadInput.value;
+            subtotalCell.innerText = subtotal.toFixed(2);
+            totalGeneral += subtotal;
+        }
+    });
+
+    document.getElementById('total-general').innerText = totalGeneral.toFixed(2);
+}
+
+// Actualizar subtotales y total al cambiar cualquier cantidad
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', actualizarTotal);
+});
+
+// Inicializa total general al cargar la página
+actualizarTotal();
+</script>

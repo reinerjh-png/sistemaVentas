@@ -1,0 +1,17 @@
+<h1>Agregar Producto</h1>
+
+<form method="post">
+    {% csrf_token %}
+    Nombre del producto: <input type="text" name="nombre"><br><br>
+    Precio: <input type="number" name="precio" step="0.01"><br><br>
+    Stock: <input type="number" name="stock"><br><br>
+    <button type="submit">Guardar Producto</button>
+</form>
+
+<a href="{% url 'index' %}">Volver al inicio</a>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>

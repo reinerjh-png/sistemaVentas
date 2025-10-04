@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Factura #{{ venta.id }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+        th { background: #f0f0f0; }
+        h2 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h2>Factura #{{ venta.id }}</h2>
+    <p><strong>Fecha:</strong> {{ venta.fecha }}</p>
+    <p><strong>Cliente:</strong> {{ venta.cliente.nombre }}</p>
+    <p><strong>Vendedor:</strong> {{ venta.vendedor.username }}</p>
+
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+        </tr>
+        {% for detalle in venta.detalles.all %}
+        <tr>
+            <td>{{ detalle.producto.nombre }}</td>
+            <td>{{ detalle.cantidad }}</td>
+            <td>{{ detalle.producto.precio }}</td>
+            <td>{{ detalle.subtotal }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3"><strong>Total</strong></td>
+            <td><strong>{{ venta.total }}</strong></td>
+        </tr>
+    </table>
+</body>
+</html>
