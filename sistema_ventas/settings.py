@@ -32,17 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ventas',
     'clientes',
-    'cloudinary',
-    'cloudinary_storage',
 ]
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dxwdmjox3',
-    'API_KEY': '961695748622731',
-    'API_SECRET': '5KrvuYGv5a32GXjnZPr-QL73QTMS',
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
