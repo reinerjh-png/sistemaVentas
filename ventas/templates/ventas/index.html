@@ -2,9 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ✅ Adaptación móvil -->
     <title>Sistema de Ventas</title>
-
     <!-- Font Awesome para íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -25,20 +23,16 @@
             background: rgba(0,0,0,0.4);
             padding: 40px 30px;
             border-radius: 15px;
-            max-width: 400px;
-            width: 90%; /* ✅ para que se ajuste en móviles */
-            box-sizing: border-box;
         }
 
         h1 {
             margin-bottom: 30px;
-            font-size: 1.8rem;
         }
 
         /* Estilo general para botones */
         .button {
             display: inline-block;
-            margin: 10px 0; /* ✅ Espaciado vertical para móviles */
+            margin: 10px;
             text-decoration: none;
             background-color: #fff;
             font-weight: bold;
@@ -48,11 +42,9 @@
             border: none;
             cursor: pointer;
             font-size: 16px;
-            width: 100%; /* ✅ Botones ocupan ancho completo en móviles */
-            box-sizing: border-box;
         }
 
-        /* Botón de iniciar sesión (AZUL) */
+        /* Botón de iniciar sesión (AZUL, sin cambios) */
         .login-button {
             background-color: #fff;
             color:  #0097a7;
@@ -81,7 +73,6 @@
 
         .factura-container {
             display: flex;
-            flex-wrap: wrap; /* ✅ Permite apilar en pantallas pequeñas */
             justify-content: center;
             align-items: center;
             margin: 15px 0;
@@ -92,33 +83,18 @@
             border-radius: 8px;
             border: none;
             text-align: center;
-            width: 100%;
-            margin-bottom: 10px; /* ✅ Separación si se apila */
+            width: 100px;
+            margin-right: 10px;
             font-size: 16px;
-            box-sizing: border-box;
         }
 
+        /* Botón de factura más grande */
         .factura-button {
             font-size: 18px;
         }
 
         .button i, .factura-button i {
             margin-right: 8px;
-        }
-
-        /* ✅ Ajustes específicos para pantallas pequeñas */
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.4rem;
-            }
-            .button {
-                font-size: 15px;
-                padding: 12px;
-            }
-            .login-button {
-                font-size: 16px;
-                padding: 14px;
-            }
         }
     </style>
 </head>
@@ -154,6 +130,7 @@
         function descargarFactura() {
             const id = document.getElementById("ventaId").value;
             if (id) {
+                // ✅ Usar URL relativa
                 window.location.href = `/factura/${id}/`;
             } else {
                 alert("Por favor, ingrese el ID de la venta.");
