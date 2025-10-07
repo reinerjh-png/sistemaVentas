@@ -2,17 +2,10 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
@@ -20,8 +13,6 @@ ALLOWED_HOSTS = []
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,14 +26,6 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 ]
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dxwdmjox3',
-    'API_KEY': '961695748622731',
-    'API_SECRET': '5KrvuYGv5a32GXjnZPr-QL73QTM',
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,67 +58,46 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sistema_ventas.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
         default='postgresql://postgres:postgres@localhost:5432/mysite',
         conn_max_age=600
     )
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'es-es'
-
 TIME_ZONE = 'America/Lima'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
 
 if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
+
 LOGIN_URL = '/signin/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ✅ Configuración de Cloudinary
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('dxwdmjox3'),
+    'API_KEY': os.environ.get('961695748622731'),
+    'API_SECRET': os.environ.get('5KrvuYGv5a32GXjnZPr-QL73QTM'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
