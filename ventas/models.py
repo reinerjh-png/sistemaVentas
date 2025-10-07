@@ -9,7 +9,7 @@ class Producto(models.Model):
     stock = models.PositiveIntegerField()
     categoria = models.CharField(max_length=50, blank=True, null=True)
     imagen = CloudinaryField('image', blank=True, null=True)
-
+    
     def __str__(self):
         return self.nombre
 
